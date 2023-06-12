@@ -23,10 +23,10 @@ app.get('/api/get', (req, res) => {
 })
 
 app.post('/api/insert', (req, res) => {
-    const bookName = req.body.bookName;
-    const bookReview = req.body.bookReview;
+    const br_name = req.body.br_name;
+    const br_review = req.body.br_review;
     const sqlInsert = "INSERT INTO book_reviews (br_name, br_review) VALUES (?,?)";
-    db.query(sqlInsert, [bookName, bookReview], (err, result) => {
+    db.query(sqlInsert, [br_name, br_review], (err, result) => {
         console.log(err);
     });
 });

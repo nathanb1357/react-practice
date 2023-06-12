@@ -16,11 +16,11 @@ function App() {
 
   const submitCheck = () => {
     Axios.post('http://localhost:3001/api/insert', {
-      bookName: bookName, 
-      bookReview: bookReview
-    }).then(() => {
-      alert("Succesful insert");
+      br_name: bookName, 
+      br_review: bookReview
     });
+    
+    setReviewList([...reviewList, {br_name: bookName, br_review: bookReview}]);
   };
 
   return (
@@ -37,9 +37,9 @@ function App() {
       </div>
       {reviewList.map((val) => {
         return ( 
-          <div key={val.br_id}>
-            <h2>Book: {val.br_name}</h2>
-            <p>Review: {val.br_review}</p>
+          <div className='Card'>
+            <h2>{val.br_name}</h2>
+            <p>{val.br_review}</p>
           </div>
         );
       })}
