@@ -31,11 +31,20 @@ app.post('/api/insert', (req, res) => {
     });
 });
 
-app.delete('/api/delete/:br_name', (req, res) => {
-    const name = req.params.br_name;
-    const sqlDelete = "DELETE FROM book_reviews WHERE br_name = ?";
-    db.query(sqlDelete, name, (err, result) => {
+app.delete('/api/delete/:br_id', (req, res) => {
+    const id = req.params.br_id;
+    const sqlDelete = "DELETE FROM book_reviews WHERE br_id = ?";
+    db.query(sqlDelete, id, (err, result) => {
         if (err) console.log(err);
+    })
+})
+
+app.put('/api/update', (req, res) => {
+    const id = req.body.br_id;
+    const review = req.body.br_review;
+    const sqlUpdate = "UPDATE book_reviews SET br_review = ? WHERE br_id = ?";
+    db.query(sqlUpdate, [review, id], (err, result) => {
+        console.log(err);
     })
 })
 
