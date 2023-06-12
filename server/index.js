@@ -23,13 +23,21 @@ app.get('/api/get', (req, res) => {
 })
 
 app.post('/api/insert', (req, res) => {
-    const br_name = req.body.br_name;
-    const br_review = req.body.br_review;
+    const name = req.body.br_name;
+    const review = req.body.br_review;
     const sqlInsert = "INSERT INTO book_reviews (br_name, br_review) VALUES (?,?)";
-    db.query(sqlInsert, [br_name, br_review], (err, result) => {
-        console.log(err);
+    db.query(sqlInsert, [name, review], (err, result) => {
+        if (err) console.log(err);
     });
 });
+
+app.delete('/api/delete/:br_name', (req, res) => {
+    const name = req.params.br_name;
+    const sqlDelete = "DELETE FROM book_reviews WHERE br_name = ?";
+    db.query(sqlDelete, name, (err, result) => {
+        if (err) console.log(err);
+    })
+})
 
 app.listen(3001, () => {
     console.log("Running on port 3001");

@@ -14,7 +14,7 @@ function App() {
     })
   }, [])
 
-  const submitCheck = () => {
+  const submitReview = () => {
     Axios.post('http://localhost:3001/api/insert', {
       br_name: bookName, 
       br_review: bookReview
@@ -22,6 +22,10 @@ function App() {
     
     setReviewList([...reviewList, {br_name: bookName, br_review: bookReview}]);
   };
+
+  const deleteReview = (name) => {
+    Axios.delete(`http://localhost:3001/api/delete/${name}`);
+  }
 
   return (
     <div className="App">
@@ -33,13 +37,17 @@ function App() {
         <label>Review:</label>
         <input type='text' name='bookReview' onChange={(e) => {setBookReview(e.target.value)}}/>
 
-        <button onClick={submitCheck}>Submit</button>
+        <button onClick={submitReview}>Submit</button>
       </div>
       {reviewList.map((val) => {
         return ( 
           <div className='Card'>
             <h2>{val.br_name}</h2>
             <p>{val.br_review}</p>
+
+            <button onClick={() => {deleteReview(val.br_name)}}>Delete</button>
+            <input type='text' className='Update'/>
+            <button>Update</button>
           </div>
         );
       })}
