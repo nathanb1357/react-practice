@@ -44,7 +44,9 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Book Reviews</h1>
+      <div id="header">
+        <h1>Nathan's Book Reviews</h1>
+      </div>
       <div className='Form'>
         <label>Book Title:</label>
         <input type='text' name='bookTitle' onChange={(e) => {setBookName(e.target.value)}}/>
@@ -52,20 +54,22 @@ function App() {
         <label>Review:</label>
         <input type='text' name='bookReview' onChange={(e) => {setBookReview(e.target.value)}}/>
 
-        <button onClick={submitReview}>Submit</button>
+        <button id="submit" onClick={submitReview}>Submit</button>
       </div>
+      <div className="Reviews">
       {reviewList.map((val) => {
         return ( 
           <div className='Card'>
             <h2>{val.br_name}</h2>
             <p>{val.br_review}</p>
 
-            <button onClick={() => {deleteReview(val.br_id)}}>Delete</button>
-            <input type='text' className='Update' onChange={(e) => {setNewReview(e.target.value)}}/>
-            <button onClick={() => {updateReview(val.br_id)}}>Update</button>
+            <button className="delete" onClick={() => {deleteReview(val.br_id)}}>Delete</button>
+            <input type='text' className='newText' onChange={(e) => {setNewReview(e.target.value)}}/>
+            <button className="update" onClick={() => {updateReview(val.br_id)}}>Update</button>
           </div>
         );
       })}
+      </div>
     </div>
   );
 }
