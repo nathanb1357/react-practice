@@ -8,34 +8,38 @@ function App() {
   const [reviewList, setReviewList] = useState([]);
   const [newReview, setNewReview] = useState('');
 
-  useEffect(() => {
-    Axios.get('http://localhost:3001/api/get').then((response) => {
-      console.log(response.data)
-      setReviewList(response.data);
-    })
-  }, [])
+  useEffect(() => {fetchReviews()}, []);
+
+  const fetchReviews = async () => {
+    const response = await Axios.get('http://localhost:3001/api/get');
+    setReviewList(response.data);
+  }
 
   const submitReview = () => {
     Axios.post('http://localhost:3001/api/insert', {
       br_name: bookName, 
       br_review: bookReview
     });
-    
     setReviewList([...reviewList, {br_name: bookName, br_review: bookReview}]);
   };
 
   const deleteReview = (id) => {
     Axios.delete(`http://localhost:3001/api/delete/${id}`);
-    setReviewList([...reviewList]);
+    setReviewList(reviewList.filter((review) => review.br_id !== id));
   }
 
-  const updateReview = (id) => {
+  const updateReview = async (id) => {
     Axios.put('http://localhost:3001/api/update', {
       br_id: id, 
       br_review: newReview
-    })
+    });
+    setReviewList(reviewList.map((review) => {
+      if (review.br_id === id) {
+        return { ...review, br_review: newReview };
+      }
+      return review;
+    }));
     setNewReview('');
-    setReviewList([...reviewList]);
   }
 
   return (
